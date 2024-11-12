@@ -1,0 +1,7 @@
+{
+  "name": "sarahs-soda",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
