@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SodaService } from '../services/soda.service';
 import { Soda } from '../models/soda.model';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 
 @Component({
   selector: 'app-soda-detail',
@@ -9,12 +10,30 @@ import { Soda } from '../models/soda.model';
   styleUrls: ['./soda-detail.page.scss'],
 })
 export class SodaDetailPage implements OnInit {
-  soda: Soda | undefined;
+  soda: Soda | any;
 
   constructor(
     private route: ActivatedRoute,
-    private sodaService: SodaService
+    private sodaService: SodaService,
+    private socialSharing: SocialSharing
   ) {}
+
+  shareSoda() {
+    const message = `Check out this soda: ${this.soda.name}!
+    Description: ${this.soda.description}
+    Caffeine: ${this.soda.caffeine} mg
+    Calories: ${this.soda.calories}
+    Size: ${this.soda.size} oz`;
+    const image = this.soda.image;
+    this.socialSharing
+      .share(message, this.soda.name, image)
+      .then(() => {
+        console.log('Shared successfully!');
+      })
+      .catch((error) => {
+        console.error('Error sharing', error);
+      });
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
@@ -40,17 +59,3 @@ export class SodaDetailPage implements OnInit {
     });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
