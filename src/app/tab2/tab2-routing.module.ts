@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: Tab2Page,
+  },
+  {
+    path: 'detail/:id',
+    loadChildren: () => import('../soda-detail/soda-detail.module').then(m => m.SodaDetailPageModule)
   }
 ];
 
@@ -14,3 +18,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class Tab2PageRoutingModule {}
+
